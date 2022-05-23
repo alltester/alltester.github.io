@@ -174,7 +174,7 @@ function videofail(){
 }
 
 function cameraon(){
-    if(!isCamera){
+    if(isCamera){
     isCameraOn = true;
     }else{
 alert("Your Device Is Not Connected To A Camera");
