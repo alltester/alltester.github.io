@@ -4,7 +4,7 @@ var sound;
 var soundslider;
 var micImg;
 var micTester;
-var mic, recorder, soundFile;
+var mic, recordero, soundFile;
 var isMic;
 var isRecording;
 var stopbutton;
@@ -38,8 +38,8 @@ function setup() {
     mic = new p5.AudioIn();
     mic.start();
 
-    recorder = new p5.SoundRecorder();
-    recorder.setInput(mic);
+    recordero = new p5.SoundRecorder();
+    recordero.setInput(mic);
 
     soundFile = new p5.SoundFile();
 
@@ -95,9 +95,18 @@ function draw() {
         image(cameralook,width/2 + 250,50,250,250);
     }
   
+
     drawSprites();
 
 }
+
+function micsuccess(){
+    isMic = true;
+}
+function micfail(){
+    isMic = false;
+}
+
 navigator.getUserMedia({
     audio : true
 }, micsuccess, micfail);
@@ -116,14 +125,10 @@ sound.stop();
 
 function mictest123(){
 
-
-
-
 if(isMic){
-
-    recorder.record(soundFile);
+    recordero.record(soundFile);
     isRecording = true;
-    background("white");
+    micTester.hide();
 }
 
 if(!isMic){
@@ -137,13 +142,13 @@ function micstopo(){
     background("white");
     isRecording = false;
     if(!isRecording){
-    recorder.stop();
     fill("black");
     textSize(30);
     text('Recording stopped.', 20, 20);
     stopbutton.hide();
     playbutton.show();
     download.show();
+    recordero.stop();
     }
 }
 
@@ -158,13 +163,6 @@ function micfilesave(){
     saveSound(soundFile, 'MicTest.wav');
 }
 
-function micsuccess(){
-    isMic = true;
-}
-function micfail(){
-    isMic = false;
-}
-
 function videosuccess(){
     isCamera = true;
 }
@@ -174,9 +172,10 @@ function videofail(){
 }
 
 function cameraon(){
-    if(isCamera){
+    if(!isCamera){
     isCameraOn = true;
     }else{
 alert("Your Device Is Not Connected To A Camera");
     }
 }
+
